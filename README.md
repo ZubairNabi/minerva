@@ -1,2 +1,2 @@
-minerva
+Stealth Mobile Learning Solution
 =======
