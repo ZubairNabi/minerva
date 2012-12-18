@@ -2,7 +2,7 @@ message User {
 	required int32 age = 1;
 	required string department = 2;
 	required string degree = 3;
-	required string degreeYear = 4;
+	required string degree_year = 4;
 }
 
 message MobileOS {
@@ -15,6 +15,7 @@ message MobileDevice {
 	required string model = 2;
 	required bool audio_support = 3;
 	required bool video_support = 4;
+	required MobileOS mobile_os = 5;
 }
 
 message NetworkDetails {
@@ -22,30 +23,30 @@ message NetworkDetails {
 	required double bandwidth = 2;	
 }
 
-message RegisterUser {
-	required string username = 1;
-	required User user = 2;
-	required MobileOS mobile_os = 3;
-	required MobileDevice mobile_device = 4;
-	required RSAKey public_key = 5;
-}
-
 message RSAKey {
     required string mod = 1;
     required string exp = 2;
 }
 
+message RegisterUser {
+	required string username = 1;
+	required User user = 2;
+	required MobileDevice mobile_device = 3;
+	required NetworkDetails network_details = 4;
+	required RSAKey public_key = 5;
+	required string symmetric_key = 6;
+}
+
+message GetPublicKey {
+	required string username = 1;
+}
+
+message GetPublicKeyResponse {
+	required RSAKey public_key = 1;
+}
+
 message RegisterUserResponse {
 	required int64 user_id = 1;
-}
-
-message ExchangePublicKey {
-	required int64 user_id = 1;
-	required string publicKeyClient = 2;
-}
-
-message ExchangePublicKeyResponse {
-	required string publicKeyService = 1;
 }
 
 message SendQuery {

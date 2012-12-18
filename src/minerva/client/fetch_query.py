@@ -2,8 +2,11 @@
 """
 import pycurl
 import cStringIO
+import base64
 
 from minerva.common.serialization import Serialization
+from minerva.common.logger import get_logger
+import minerva.common.AESCrypto as AES
 
 QUERY_TYPE = { 'keyword': 'q',
                   'ntriple': 'nq'
@@ -11,43 +14,71 @@ QUERY_TYPE = { 'keyword': 'q',
 
 class Fetcher(object):
     
-    def __init__(self, ip, port):
+    def __init__(self, ip, port, rsa_key, aes_key):
         self.curl = pycurl.Curl()
-        self.buf = cStringIO.StringIO()
         self.server_ip = ip
         self.server_port = port
+        self.rsa_key = rsa_key
+        self.aes_key = aes_key
+        self.server_public_key = None
+        self.logger = get_logger('client')
         
-    def fetch(self, query):
-        method = 'query'
+    def set_server_public_key(self, server_public_key):
+        self.server_public_key = server_public_key
+        
+    def __post(self, method, encoded_message, rsa_encrypt=None, aes_encrypt=None):
+        buf = cStringIO.StringIO()
         query_var = 'message'
         base_url = 'http://' + self.server_ip + ':' + str(self.server_port)
-        encoded = Serialization.serialize_sendquery(1, query)
-        service_url = '/' + method + '/?' + query_var + '=' + encoded
-        print 'URL: %s', base_url + service_url
+        encoded_message = base64.b64encode(encoded_message)
+        service_url = '/' + method + '/?' + query_var + '=' + encoded_message
+        self.logger.debug('URL: %s', base_url + service_url)
         self.curl.setopt(pycurl.URL, base_url + service_url)
-        self.curl.setopt(pycurl.WRITEFUNCTION, self.buf.write)
+        self.curl.setopt(pycurl.WRITEFUNCTION, buf.write)
         try:
             self.curl.perform()
             if self.curl.getinfo(pycurl.HTTP_CODE) == 200:
-                print 'Query success!'
+                self.logger.debug('Query success!')
             else:
-                print 'Query Failure!'
-            return Serialization.deserialize_sendqueryresponse(self.buf.getvalue())
+                self.logger.debug('Query Failure!')
+            response = buf.getvalue()
+            response = base64.b64decode(response)
+            buf.close()
+            if rsa_encrypt:
+                response = self.rsa_key.decrypt(response)
+            elif aes_encrypt:
+                response = AES._aes_decrypt(self.aes_key, response)
+            return response
         except pycurl.error, msg: 
             errno, text = msg 
-            print 'pycURL Error! (error number %d): %s' % (errno, text)
-            print 'pycURL HTTP status code: %d' % (self.curl.getinfo(pycurl.HTTP_CODE))  
+            self.logger.error('pycURL Error! (error number %d): %s' % (errno, text))
+            self.logger.error('pycURL HTTP status code: %d' % (self.curl.getinfo(pycurl.HTTP_CODE)))  
+        
+    def fetch(self, user_id, query):
+        encoded = Serialization.serialize_sendquery(user_id, 
+                                                    AES._aes_encrypt_and_encode(self.aes_key, query))
+        response = self.__post('query', encoded, aes_encrypt=True)
+        return Serialization.deserialize_sendqueryresponse(response)
     
-    def __del__(self):
-        self.curl.close()  
-        self.buf.close()   
+    def register(self, username, user, mobile_device, network_details, public_key, symmetric_key):
+        encoded = Serialization.serialize_registeruser(username, 
+                                                       user, 
+                                                       mobile_device, 
+                                                       network_details, 
+                                                       str(public_key.n),
+                                                       str(public_key.e),
+                                                       base64.b64encode(self.server_public_key.encrypt(symmetric_key, 32)[0]))
+        response = self.__post('register', encoded, rsa_encrypt=True)
+        return Serialization.deserialize_registeruserresponse(response)
     
-def test():
-    fetch_query = Fetcher("localhost", 8080)
-    response = fetch_query.fetch('Islamabad')
-    print response
+    def getpublickey(self, username):
+        encoded = Serialization.serialize_getpublickey(username)
+        response = self.__post('getpublickey', encoded)
+        return Serialization.deserialize_getpublickeyresponse(response)
+    
+    def __encryptrsa(self, message):
+        return 
 
-if __name__ == '__main__':
-    test()
-    
+    def __del__(self):
+        self.curl.close()    
     

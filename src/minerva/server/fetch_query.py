@@ -2,42 +2,40 @@
 """
 import pycurl
 import cStringIO
-
-QUERY_TYPE = { 'keyword': 'q',
-                  'ntriple': 'nq'
-            }
+from minerva.common.constants import QUERY_TYPE, SINDICE_URL
 
 class Fetcher(object):
     
-    def __init__(self):
+    def __init__(self, logger):
         self.curl = pycurl.Curl()
-        self.buf = cStringIO.StringIO()
+        self.logger = logger
         
     def fetch(self, query_type, query, filter_query=None, page=1, format__='json'):
-        baseurl = "http://api.sindice.com/v3/search?"
+        buf = cStringIO.StringIO()
         sep = '&'
-        query_post = baseurl + str(QUERY_TYPE[query_type]) + '=' + str(query) \
+        query_post = SINDICE_URL + str(QUERY_TYPE[query_type]) + '=' + str(query) \
         + sep + 'page=' + str(page) + sep + 'format=' + format__
         if filter_query:
             query_post += sep + 'fq=' + filter_query
-        print "Query URL: " + query_post
+        self.logger.debug("Query URL: " + query_post)
         self.curl.setopt(pycurl.URL, query_post)
-        self.curl.setopt(pycurl.WRITEFUNCTION, self.buf.write)
+        self.curl.setopt(pycurl.WRITEFUNCTION, buf.write)
         try:
             self.curl.perform()
             if self.curl.getinfo(pycurl.HTTP_CODE) == 200:
-                print 'Query success!'
+                self.logger.debug('Query success!')
             else:
-                print 'Query Failure!'
-            return self.buf.getvalue()
+                self.logger.debug('Query Failure!')
+            response = buf.getvalue()
+            buf.close() 
+            return response
         except pycurl.error, msg: 
             errno, text = msg 
-            print 'pycURL Error! (error number %d): %s' % (errno, text)
-            print 'pycURL HTTP status code: %d' % (self.curl.getinfo(pycurl.HTTP_CODE))  
+            self.logger.error('pycURL Error! (error number %d): %s' % (errno, text))
+            self.logger.error('pycURL HTTP status code: %d' % (self.curl.getinfo(pycurl.HTTP_CODE)))  
     
     def __del__(self):
-        self.curl.close()  
-        self.buf.close()   
+        self.curl.close()    
     
 def test():
     fetch_query = Fetcher()

@@ -5,8 +5,8 @@ from fetch_query import Fetcher
 
 class Parser():
     
-    def __init__(self):
-        pass
+    def __init__(self, logger):
+        self.logger = logger
     
     def parse(self, query):
         query = json.loads(query)
