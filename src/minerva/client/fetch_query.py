@@ -54,9 +54,10 @@ class Fetcher(object):
             self.logger.error('pycURL Error! (error number %d): %s' % (errno, text))
             self.logger.error('pycURL HTTP status code: %d' % (self.curl.getinfo(pycurl.HTTP_CODE)))  
         
-    def fetch(self, user_id, query):
+    def fetch(self, user_id, query, page):
         encoded = Serialization.serialize_sendquery(user_id, 
-                                                    AES._aes_encrypt_and_encode(self.aes_key, query))
+                                                    AES._aes_encrypt_and_encode(self.aes_key, query),
+                                                    page)
         response = self.__post('query', encoded, aes_encrypt=True)
         return Serialization.deserialize_sendqueryresponse(response)
     

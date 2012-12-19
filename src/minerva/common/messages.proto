@@ -52,6 +52,7 @@ message RegisterUserResponse {
 message SendQuery {
 	required int64 user_id = 1;
 	required string	query = 2;
+	required int32 page = 3;
 }
 
 message SendQueryResponse {

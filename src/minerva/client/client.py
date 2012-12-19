@@ -18,8 +18,8 @@ class Client(object):
         self.mobile_device = Serialization.create_mobiledevice('Samsung', 'Ace', True, True, 'Android', 'Gingerbread')
         self.network_details = Serialization.create_networkdetails(1000)
     
-    def fetch(self, query):
-        return self.__fetcher.fetch(self.user_id, query)
+    def fetch(self, query, page):
+        return self.__fetcher.fetch(self.user_id, query, page)
     
     def getpublickey(self):
         publickey = self.__fetcher.getpublickey(self.username).public_key
@@ -39,5 +39,7 @@ if __name__ == '__main__':
     client.getpublickey()
     client.register()
     print client.user_id
-    response = client.fetch("Islamabad")
-    print response
+    print client.fetch("Islamabad", 1)
+    print client.fetch("Islamabad", 2)
+    
+    

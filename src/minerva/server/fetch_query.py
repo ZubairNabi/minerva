@@ -37,12 +37,3 @@ class Fetcher(object):
     def __del__(self):
         self.curl.close()    
     
-def test():
-    fetch_query = Fetcher()
-    response = fetch_query.fetch('keyword', 'Islamabad')
-    print response
-
-if __name__ == '__main__':
-    test()
-    
-    

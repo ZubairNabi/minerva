@@ -3,10 +3,11 @@ import messages_pb2 as messages
 class Serialization(object):
     
     @staticmethod        
-    def serialize_sendquery(user_id, query):
+    def serialize_sendquery(user_id, query, page=1):
         send_query = messages.SendQuery()
         send_query.user_id = user_id
         send_query.query = query
+        send_query.page = page
         return send_query.SerializeToString()
     
     @staticmethod
