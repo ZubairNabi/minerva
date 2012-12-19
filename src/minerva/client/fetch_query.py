@@ -7,10 +7,11 @@ import base64
 from minerva.common.serialization import Serialization
 from minerva.common.logger import get_logger
 import minerva.common.AESCrypto as AES
+import minerva.common.RSACrypto as RSA
 
-QUERY_TYPE = { 'keyword': 'q',
-                  'ntriple': 'nq'
-            }
+QUERY_TYPE = {  'keyword': 'q',
+                'ntriple': 'nq'
+}
 
 class Fetcher(object):
     
@@ -45,7 +46,7 @@ class Fetcher(object):
             response = base64.b64decode(response)
             buf.close()
             if rsa_encrypt:
-                response = self.rsa_key.decrypt(response)
+                response = RSA._rsa_decrypt(self.rsa_key, response)
             elif aes_encrypt:
                 response = AES._aes_decrypt(self.aes_key, response)
             return response
@@ -68,7 +69,7 @@ class Fetcher(object):
                                                        network_details, 
                                                        str(public_key.n),
                                                        str(public_key.e),
-                                                       base64.b64encode(self.server_public_key.encrypt(symmetric_key, 32)[0]))
+                                                       RSA._rsa_encrypt_and_encode(self.server_public_key, symmetric_key))
         response = self.__post('register', encoded, rsa_encrypt=True)
         return Serialization.deserialize_registeruserresponse(response)
     
@@ -76,9 +77,6 @@ class Fetcher(object):
         encoded = Serialization.serialize_getpublickey(username)
         response = self.__post('getpublickey', encoded)
         return Serialization.deserialize_getpublickeyresponse(response)
-    
-    def __encryptrsa(self, message):
-        return 
 
     def __del__(self):
         self.curl.close()    
