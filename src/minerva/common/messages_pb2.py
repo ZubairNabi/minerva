@@ -11,7 +11,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='messages.proto',
   package='',
-  serialized_pb='\n\x0emessages.proto\"L\n\x04User\x12\x0b\n\x03\x61ge\x18\x01 \x02(\x05\x12\x12\n\ndepartment\x18\x02 \x02(\t\x12\x0e\n\x06\x64\x65gree\x18\x03 \x02(\t\x12\x13\n\x0b\x64\x65gree_year\x18\x04 \x02(\t\"*\n\x08MobileOS\x12\n\n\x02os\x18\x01 \x02(\t\x12\x12\n\nos_version\x18\x02 \x02(\t\"x\n\x0cMobileDevice\x12\r\n\x05\x62rand\x18\x01 \x02(\t\x12\r\n\x05model\x18\x02 \x02(\t\x12\x15\n\raudio_support\x18\x03 \x02(\x08\x12\x15\n\rvideo_support\x18\x04 \x02(\x08\x12\x1c\n\tmobile_os\x18\x05 \x02(\x0b\x32\t.MobileOS\"/\n\x0eNetworkDetails\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x11\n\tbandwidth\x18\x02 \x02(\x01\"\"\n\x06RSAKey\x12\x0b\n\x03mod\x18\x01 \x02(\t\x12\x0b\n\x03\x65xp\x18\x02 \x02(\t\"\xb9\x01\n\x0cRegisterUser\x12\x10\n\x08username\x18\x01 \x02(\t\x12\x13\n\x04user\x18\x02 \x02(\x0b\x32\x05.User\x12$\n\rmobile_device\x18\x03 \x02(\x0b\x32\r.MobileDevice\x12(\n\x0fnetwork_details\x18\x04 \x02(\x0b\x32\x0f.NetworkDetails\x12\x1b\n\npublic_key\x18\x05 \x02(\x0b\x32\x07.RSAKey\x12\x15\n\rsymmetric_key\x18\x06 \x02(\t\" \n\x0cGetPublicKey\x12\x10\n\x08username\x18\x01 \x02(\t\"3\n\x14GetPublicKeyResponse\x12\x1b\n\npublic_key\x18\x01 \x02(\x0b\x32\x07.RSAKey\"\'\n\x14RegisterUserResponse\x12\x0f\n\x07user_id\x18\x01 \x02(\x03\"9\n\tSendQuery\x12\x0f\n\x07user_id\x18\x01 \x02(\x03\x12\r\n\x05query\x18\x02 \x02(\t\x12\x0c\n\x04page\x18\x03 \x02(\x05\"7\n\x11SendQueryResponse\x12\"\n\x0cquery_result\x18\x01 \x03(\x0b\x32\x0c.QueryResult\")\n\x0bQueryResult\x12\r\n\x05title\x18\x01 \x02(\t\x12\x0b\n\x03url\x18\x02 \x02(\t')
+  serialized_pb='\n\x0emessages.proto\"L\n\x04User\x12\x0b\n\x03\x61ge\x18\x01 \x02(\x05\x12\x12\n\ndepartment\x18\x02 \x02(\t\x12\x0e\n\x06\x64\x65gree\x18\x03 \x02(\t\x12\x13\n\x0b\x64\x65gree_year\x18\x04 \x02(\t\"*\n\x08MobileOS\x12\n\n\x02os\x18\x01 \x02(\t\x12\x12\n\nos_version\x18\x02 \x02(\t\"x\n\x0cMobileDevice\x12\r\n\x05\x62rand\x18\x01 \x02(\t\x12\r\n\x05model\x18\x02 \x02(\t\x12\x15\n\raudio_support\x18\x03 \x02(\x08\x12\x15\n\rvideo_support\x18\x04 \x02(\x08\x12\x1c\n\tmobile_os\x18\x05 \x02(\x0b\x32\t.MobileOS\"/\n\x0eNetworkDetails\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x11\n\tbandwidth\x18\x02 \x02(\x01\"\"\n\x06RSAKey\x12\x0b\n\x03mod\x18\x01 \x02(\t\x12\x0b\n\x03\x65xp\x18\x02 \x02(\t\"\xb9\x01\n\x0cRegisterUser\x12\x10\n\x08username\x18\x01 \x02(\t\x12\x13\n\x04user\x18\x02 \x02(\x0b\x32\x05.User\x12$\n\rmobile_device\x18\x03 \x02(\x0b\x32\r.MobileDevice\x12(\n\x0fnetwork_details\x18\x04 \x02(\x0b\x32\x0f.NetworkDetails\x12\x1b\n\npublic_key\x18\x05 \x02(\x0b\x32\x07.RSAKey\x12\x15\n\rsymmetric_key\x18\x06 \x02(\t\" \n\x0cGetPublicKey\x12\x10\n\x08username\x18\x01 \x02(\t\"3\n\x14GetPublicKeyResponse\x12\x1b\n\npublic_key\x18\x01 \x02(\x0b\x32\x07.RSAKey\"\'\n\x14RegisterUserResponse\x12\x0f\n\x07user_id\x18\x01 \x02(\x03\"V\n\tSendQuery\x12\x0f\n\x07user_id\x18\x01 \x02(\x03\x12\r\n\x05query\x18\x02 \x02(\t\x12\x0c\n\x04page\x18\x03 \x02(\x05\x12\x1b\n\x08location\x18\x04 \x02(\x0b\x32\t.Location\"7\n\x11SendQueryResponse\x12\"\n\x0cquery_result\x18\x01 \x03(\x0b\x32\x0c.QueryResult\")\n\x0bQueryResult\x12\r\n\x05title\x18\x01 \x02(\t\x12\x0b\n\x03url\x18\x02 \x02(\t\"/\n\x08Location\x12\x11\n\tlongitude\x18\x01 \x02(\x01\x12\x10\n\x08latitude\x18\x02 \x02(\x01')
 
 
 
@@ -401,6 +401,13 @@ _SENDQUERY = descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    descriptor.FieldDescriptor(
+      name='location', full_name='SendQuery.location', index=3,
+      number=4, type=11, cpp_type=10, label=2,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -411,7 +418,7 @@ _SENDQUERY = descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=663,
-  serialized_end=720,
+  serialized_end=749,
 )
 
 
@@ -438,8 +445,8 @@ _SENDQUERYRESPONSE = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=722,
-  serialized_end=777,
+  serialized_start=751,
+  serialized_end=806,
 )
 
 
@@ -473,8 +480,43 @@ _QUERYRESULT = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=779,
-  serialized_end=820,
+  serialized_start=808,
+  serialized_end=849,
+)
+
+
+_LOCATION = descriptor.Descriptor(
+  name='Location',
+  full_name='Location',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='longitude', full_name='Location.longitude', index=0,
+      number=1, type=1, cpp_type=5, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='latitude', full_name='Location.latitude', index=1,
+      number=2, type=1, cpp_type=5, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=851,
+  serialized_end=898,
 )
 
 _MOBILEDEVICE.fields_by_name['mobile_os'].message_type = _MOBILEOS
@@ -483,6 +525,7 @@ _REGISTERUSER.fields_by_name['mobile_device'].message_type = _MOBILEDEVICE
 _REGISTERUSER.fields_by_name['network_details'].message_type = _NETWORKDETAILS
 _REGISTERUSER.fields_by_name['public_key'].message_type = _RSAKEY
 _GETPUBLICKEYRESPONSE.fields_by_name['public_key'].message_type = _RSAKEY
+_SENDQUERY.fields_by_name['location'].message_type = _LOCATION
 _SENDQUERYRESPONSE.fields_by_name['query_result'].message_type = _QUERYRESULT
 DESCRIPTOR.message_types_by_name['User'] = _USER
 DESCRIPTOR.message_types_by_name['MobileOS'] = _MOBILEOS
@@ -496,6 +539,7 @@ DESCRIPTOR.message_types_by_name['RegisterUserResponse'] = _REGISTERUSERRESPONSE
 DESCRIPTOR.message_types_by_name['SendQuery'] = _SENDQUERY
 DESCRIPTOR.message_types_by_name['SendQueryResponse'] = _SENDQUERYRESPONSE
 DESCRIPTOR.message_types_by_name['QueryResult'] = _QUERYRESULT
+DESCRIPTOR.message_types_by_name['Location'] = _LOCATION
 
 class User(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
@@ -568,5 +612,11 @@ class QueryResult(message.Message):
   DESCRIPTOR = _QUERYRESULT
   
   # @@protoc_insertion_point(class_scope:QueryResult)
+
+class Location(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _LOCATION
+  
+  # @@protoc_insertion_point(class_scope:Location)
 
 # @@protoc_insertion_point(module_scope)

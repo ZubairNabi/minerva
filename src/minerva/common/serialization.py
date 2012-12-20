@@ -2,12 +2,20 @@ import messages_pb2 as messages
 
 class Serialization(object):
     
+    @staticmethod
+    def create_location(lat, lon):
+        location = messages.Location()
+        location.longitude = lon
+        location.latitude = lat
+        return location
+    
     @staticmethod        
-    def serialize_sendquery(user_id, query, page=1):
+    def serialize_sendquery(user_id, query, page=1, lat=0.0, lon=0.0):
         send_query = messages.SendQuery()
         send_query.user_id = user_id
         send_query.query = query
         send_query.page = page
+        send_query.location.CopyFrom(Serialization.create_location(lat, lon))
         return send_query.SerializeToString()
     
     @staticmethod

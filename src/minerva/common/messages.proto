@@ -53,6 +53,7 @@ message SendQuery {
 	required int64 user_id = 1;
 	required string	query = 2;
 	required int32 page = 3;
+	required Location location = 4;
 }
 
 message SendQueryResponse {
@@ -62,4 +63,9 @@ message SendQueryResponse {
 message QueryResult {
 	required string title = 1;
 	required string url = 2;
+}
+
+message Location {
+	required double longitude = 1;
+	required double latitude = 2;
 }
