@@ -5,6 +5,7 @@ from parse_query import Parser
 from minerva.common.serialization import Serialization
 import minerva.common.RSACrypto as RSA
 import minerva.common.AESCrypto as AES
+from ontology_manager import OntologyManager
 
 class Handler(object):
     
@@ -19,6 +20,7 @@ class Handler(object):
         self.logger.info('Server RSA key mod %s, exp %s', str(self.rsa_key.n), str(self.rsa_key.e))
         self.__fetch_query = Fetcher(logger)
         self.__parse_query = Parser(logger)
+        self.__ontology_manager = OntologyManager()
         
     def handle_query(self, message):
         query_message = Serialization.deserialize_sendquery(message)
@@ -40,6 +42,8 @@ class Handler(object):
             register.symmetric_key = RSA._rsa_decrypt_and_decode(self.rsa_key, 
                                                       register.symmetric_key)
             self.clients[user_id] = register
+            self.__ontology_manager.add_individual('User', register.username)
+            self.__ontology_manager.save()
             self.client_id += 1  
             return RSA.rsa_encrypt_client(self.clients[user_id], 
                                           Serialization.serialize_registeruserresponse(user_id))

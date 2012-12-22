@@ -9,3 +9,4 @@ QUERY_TYPE = { 'keyword': 'q',
 RSA_KEYSIZE = 1024
 AES_KEYSIZE = 16
 AES_MODE = AES.MODE_ECB
+ONTOLOGY_FILE = "minerva.owl"

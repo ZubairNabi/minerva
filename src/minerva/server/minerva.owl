@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY minerva "http://www.semanticweb.org/ontologies/2012/11/minerva.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/2012/11/minerva.owl#"
+     xml:base="http://www.semanticweb.org/ontologies/2012/11/minerva.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:minerva="http://www.semanticweb.org/ontologies/2012/11/minerva.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/ontologies/2012/11/minerva.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#hasAge -->
+
+    <owl:ObjectProperty rdf:about="&minerva;hasAge">
+        <rdfs:range rdf:resource="&minerva;Age"/>
+        <rdfs:domain rdf:resource="&minerva;User"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#hasDegree -->
+
+    <owl:ObjectProperty rdf:about="&minerva;hasDegree">
+        <rdfs:range rdf:resource="&minerva;Degree"/>
+        <rdfs:domain rdf:resource="&minerva;User"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#hasDegreeYear -->
+
+    <owl:ObjectProperty rdf:about="&minerva;hasDegreeYear">
+        <rdfs:range rdf:resource="&minerva;DegreeYear"/>
+        <rdfs:domain rdf:resource="&minerva;User"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#hasDepartment -->
+
+    <owl:ObjectProperty rdf:about="&minerva;hasDepartment">
+        <rdfs:range rdf:resource="&minerva;Department"/>
+        <rdfs:domain rdf:resource="&minerva;User"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#hasDeviceAttribute -->
+
+    <owl:ObjectProperty rdf:about="&minerva;hasDeviceAttribute">
+        <rdfs:range rdf:resource="&minerva;DeviceAttribute"/>
+        <rdfs:domain rdf:resource="&minerva;User"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#hasNetworkAttribute -->
+
+    <owl:ObjectProperty rdf:about="&minerva;hasNetworkAttribute">
+        <rdfs:range rdf:resource="&minerva;NetworkAttribute"/>
+        <rdfs:domain rdf:resource="&minerva;User"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#hasPersonAttribute -->
+
+    <owl:ObjectProperty rdf:about="&minerva;hasPersonAttribute">
+        <rdfs:range rdf:resource="&minerva;PersonAttribute"/>
+        <rdfs:domain rdf:resource="&minerva;User"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Age -->
+
+    <owl:Class rdf:about="&minerva;Age">
+        <rdfs:subClassOf rdf:resource="&minerva;PersonAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#AudioSupport -->
+
+    <owl:Class rdf:about="&minerva;AudioSupport">
+        <rdfs:subClassOf rdf:resource="&minerva;DeviceAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Bandwidth -->
+
+    <owl:Class rdf:about="&minerva;Bandwidth">
+        <rdfs:subClassOf rdf:resource="&minerva;NetworkAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Brand -->
+
+    <owl:Class rdf:about="&minerva;Brand">
+        <rdfs:subClassOf rdf:resource="&minerva;DeviceAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Degree -->
+
+    <owl:Class rdf:about="&minerva;Degree">
+        <rdfs:subClassOf rdf:resource="&minerva;PersonAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#DegreeYear -->
+
+    <owl:Class rdf:about="&minerva;DegreeYear">
+        <rdfs:subClassOf rdf:resource="&minerva;PersonAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Department -->
+
+    <owl:Class rdf:about="&minerva;Department">
+        <rdfs:subClassOf rdf:resource="&minerva;PersonAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#DeviceAttribute -->
+
+    <owl:Class rdf:about="&minerva;DeviceAttribute">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#IP -->
+
+    <owl:Class rdf:about="&minerva;IP">
+        <rdfs:subClassOf rdf:resource="&minerva;NetworkAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Latitude -->
+
+    <owl:Class rdf:about="&minerva;Latitude">
+        <rdfs:subClassOf rdf:resource="&minerva;Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Location -->
+
+    <owl:Class rdf:about="&minerva;Location">
+        <rdfs:subClassOf rdf:resource="&minerva;DeviceAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Longitude -->
+
+    <owl:Class rdf:about="&minerva;Longitude">
+        <rdfs:subClassOf rdf:resource="&minerva;Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#Model -->
+
+    <owl:Class rdf:about="&minerva;Model">
+        <rdfs:subClassOf rdf:resource="&minerva;DeviceAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#NetworkAttribute -->
+
+    <owl:Class rdf:about="&minerva;NetworkAttribute">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#OSType -->
+
+    <owl:Class rdf:about="&minerva;OSType">
+        <rdfs:subClassOf rdf:resource="&minerva;DeviceAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#OSVersion -->
+
+    <owl:Class rdf:about="&minerva;OSVersion">
+        <rdfs:subClassOf rdf:resource="&minerva;DeviceAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#PersonAttribute -->
+
+    <owl:Class rdf:about="&minerva;PersonAttribute"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#User -->
+
+    <owl:Class rdf:about="&minerva;User"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2012/11/minerva.owl#VideoSupport -->
+
+    <owl:Class rdf:about="&minerva;VideoSupport">
+        <rdfs:subClassOf rdf:resource="&minerva;DeviceAttribute"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.2.3.1824) http://owlapi.sourceforge.net -->
+
