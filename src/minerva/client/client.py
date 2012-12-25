@@ -1,3 +1,6 @@
+import sys
+sys.path.append("./../..")
+
 from minerva.common.RSACrypto import generate_public_key, generate_RSA_keypair, \
 get_public_key
 from minerva.common.AESCrypto import generate_AES_key

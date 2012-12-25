@@ -1,5 +1,5 @@
-try: import simplejson
-except: import json
+try: import simplejson as json
+except ImportError: import json
 
 class Parser():
     

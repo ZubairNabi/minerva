@@ -1,6 +1,6 @@
-from rdflib.graph import Graph
-from rdflib.namespace import Namespace, RDF, OWL
-from rdflib import OWL
+from rdflib import Graph, Namespace, RDF
+try: from rdflib import OWL
+except: OWL = Namespace('http://www.w3.org/2002/07/owl#')
 
 from minerva.common.constants import ONTOLOGY_FILE
 
