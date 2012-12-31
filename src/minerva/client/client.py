@@ -11,12 +11,12 @@ from minerva.common.serialization import Serialization
 
 class Client(object):
     
-    def __init__(self):
+    def __init__(self, server_ip):
         self.rsa_key = generate_RSA_keypair()
         self.aes_key = generate_AES_key()
         self.server_public_key = None
         self.user_id = None
-        self.__fetcher = Fetcher(SERVER_IP, SERVER_PORT, self.rsa_key, self.aes_key)
+        self.__fetcher = Fetcher(server_ip, SERVER_PORT, self.rsa_key, self.aes_key)
         self.username = 'zubair'
         self.user = Serialization.create_user(25, 'CS', 'MPhil', '2012')
         self.mobile_device = Serialization.create_mobiledevice('Samsung', 'Ace', True, True, 'Android', 'Gingerbread')
@@ -39,7 +39,10 @@ class Client(object):
                                        self.aes_key).user_id
         
 if __name__ == '__main__':
-    client = Client()
+    server_ip = SERVER_IP
+    if len(sys.argv) == 2:
+        server_ip = sys.argv[1]
+    client = Client(server_ip)
     client.getpublickey()
     client.register()
     print client.user_id
