@@ -1,6 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + os.sep + '../..')
+import time
 
 from minerva.common.RSACrypto import generate_public_key, generate_RSA_keypair, \
 get_public_key
@@ -43,10 +44,18 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         server_ip = sys.argv[1]
     client = Client(server_ip)
+    start_time = time.time()
     client.getpublickey()
+    print "getpublickey() took %f" % (time.time() - start_time)
+    start_time = time.time()
     client.register()
+    print "register() took %f" % (time.time() - start_time)
     print client.user_id
+    start_time = time.time()
     print client.fetch("Islamabad", 1)
+    print "fetch() took %f" % (time.time() - start_time)
+    start_time = time.time()
     print client.fetch("Islamabad", 2)
+    print "fetch() took %f" % (time.time() - start_time)
     
     
