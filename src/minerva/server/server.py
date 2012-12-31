@@ -12,10 +12,10 @@ from minerva.common.logger import get_logger
 
 class Server():
     
-    def __init__(self):
+    def __init__(self, server_ip):
         
         self.__port = SERVER_PORT
-        self.__addr = '0.0.0.0'
+        self.__addr = server_ip
         cherrypy.config.update({
             'server.socket_port': self.__port,
             'server.socket_host': self.__addr,
@@ -82,7 +82,10 @@ class Root(object):
             (str(err_msg)))
 
 def main():
-    server = Server()
+    server_ip = '0.0.0.0'
+    if len(sys.argv) == 2:
+        server_ip = sys.argv[1]
+    server = Server(server_ip)
     server.start()
 
 if __name__ == '__main__':
