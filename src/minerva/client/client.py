@@ -1,5 +1,6 @@
 import sys
-sys.path.append("./../..")
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + os.sep + '../..')
 
 from minerva.common.RSACrypto import generate_public_key, generate_RSA_keypair, \
 get_public_key

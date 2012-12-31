@@ -1,3 +1,4 @@
+import os
 from rdflib import Graph, Namespace, RDF
 try: from rdflib import OWL
 except: OWL = Namespace('http://www.w3.org/2002/07/owl#')
@@ -9,8 +10,9 @@ MINERVA = Namespace('http://www.semanticweb.org/ontologies/2012/11/minerva.owl#'
 class OntologyManager(object):
     
     def __init__(self):
+        self.filepath = os.path.dirname(os.path.abspath(__file__)) + os.sep + ONTOLOGY_FILE
         self.graph = Graph()
-        self.graph.parse(ONTOLOGY_FILE)
+        self.graph.parse(self.filepath)
     
     def decorate_owl(self, value):
         return OWL[value] 
@@ -34,5 +36,5 @@ class OntologyManager(object):
             print 'Triple: s: %s, p: %s, o: %s' % (s, p, o)
             
     def save(self):
-        self.graph.serialize(ONTOLOGY_FILE)
+        self.graph.serialize(self.filepath)
             
