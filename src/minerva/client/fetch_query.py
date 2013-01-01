@@ -39,9 +39,9 @@ class Fetcher(object):
         try:
             self.curl.perform()
             if self.curl.getinfo(pycurl.HTTP_CODE) == 200:
-                self.logger.debug('Query success!')
+                self.logger.debug('%s: Success!' % method)
             else:
-                self.logger.debug('Query Failure!')
+                self.logger.debug('%s: Failure!' % method)
             response = buf.getvalue()
             response = base64.b64decode(response)
             buf.close()
