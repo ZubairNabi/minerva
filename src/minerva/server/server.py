@@ -7,12 +7,12 @@ import base64
 
 from minerva.common.serialization import Serialization
 from handle_query import Handler
-from minerva.common.constants import SERVER_PORT
+from minerva.common.constants import SERVER_PORT, ENCRYPTION
 from minerva.common.logger import get_logger
 
 class Server():
     
-    def __init__(self, server_ip):
+    def __init__(self, server_ip, encryption):
         
         self.__port = SERVER_PORT
         self.__addr = server_ip
@@ -20,6 +20,7 @@ class Server():
             'server.socket_port': self.__port,
             'server.socket_host': self.__addr,
         })
+        self.encryption = encryption
         self.logger = get_logger('server')
         self.logger.debug('Initialized cherrypy output server')
         
@@ -31,16 +32,16 @@ class Server():
                 'tools.trailing_slash.on': True,
             }
         }
-        cherrypy.tree.mount(Root(self.logger), config=app_config)
+        cherrypy.tree.mount(Root(self.logger, self.encryption), config=app_config)
         self.logger.debug('Started cherrypy output server engine')
         cherrypy.engine.start()
         cherrypy.engine.block()
 
 class Root(object):
 
-    def __init__(self, logger):
+    def __init__(self, logger, encryption):
         self.logger = logger
-        self.handler = Handler(logger)
+        self.handler = Handler(logger, encryption)
 
     @cherrypy.expose
     def index(self):
@@ -83,9 +84,10 @@ class Root(object):
 
 def main():
     server_ip = '0.0.0.0'
+    encryption = ENCRYPTION
     if len(sys.argv) == 2:
         server_ip = sys.argv[1]
-    server = Server(server_ip)
+    server = Server(server_ip, encryption)
     server.start()
 
 if __name__ == '__main__':

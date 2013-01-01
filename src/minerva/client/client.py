@@ -6,20 +6,20 @@ import time
 from minerva.common.RSACrypto import generate_public_key, generate_RSA_keypair, \
 get_public_key
 from minerva.common.AESCrypto import generate_AES_key
-from minerva.common.constants import SERVER_IP, SERVER_PORT
+from minerva.common.constants import SERVER_IP, SERVER_PORT, ENCRYPTION
 from fetch_query import Fetcher
 from minerva.common.serialization import Serialization
 from minerva.common.logger import get_logger
 
 class Client(object):
     
-    def __init__(self, server_ip):
+    def __init__(self, server_ip, encryption):
         self.rsa_key = generate_RSA_keypair()
         self.aes_key = generate_AES_key()
         self.logger = get_logger('client')
         self.server_public_key = None
         self.user_id = None
-        self.__fetcher = Fetcher(server_ip, SERVER_PORT, self.rsa_key, self.aes_key, self.logger)
+        self.__fetcher = Fetcher(server_ip, SERVER_PORT, self.rsa_key, self.aes_key, self.logger, encryption)
         self.username = 'zubair'
         self.user = Serialization.create_user(25, 'CS', 'MPhil', '2012')
         self.mobile_device = Serialization.create_mobiledevice('Samsung', 'Ace', True, True, 'Android', 'Gingerbread')
@@ -43,10 +43,11 @@ class Client(object):
         
 if __name__ == '__main__':
     server_ip = SERVER_IP
+    encryption = ENCRYPTION
     if len(sys.argv) == 2:
         server_ip = sys.argv[1]
     logger = get_logger('client_tests')
-    client = Client(server_ip)
+    client = Client(server_ip, encryption)
     start_time = time.time()
     client.getpublickey()
     logger.info("getpublickey() took %f" % (time.time() - start_time))

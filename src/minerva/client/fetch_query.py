@@ -14,7 +14,7 @@ QUERY_TYPE = {  'keyword': 'q',
 
 class Fetcher(object):
     
-    def __init__(self, ip, port, rsa_key, aes_key, logger):
+    def __init__(self, ip, port, rsa_key, aes_key, logger, encryption):
         self.curl = pycurl.Curl()
         self.server_ip = ip
         self.server_port = port
@@ -22,6 +22,7 @@ class Fetcher(object):
         self.aes_key = aes_key
         self.server_public_key = None
         self.logger = logger
+        self.encryption = encryption
         
     def set_server_public_key(self, server_public_key):
         self.server_public_key = server_public_key
@@ -55,21 +56,25 @@ class Fetcher(object):
             self.logger.error('pycURL HTTP status code: %d' % (self.curl.getinfo(pycurl.HTTP_CODE)))  
         
     def fetch(self, user_id, query, page):
+        if self.encryption:
+            query = AES._aes_encrypt_and_encode(self.aes_key, query)
         encoded = Serialization.serialize_sendquery(user_id, 
-                                                    AES._aes_encrypt_and_encode(self.aes_key, query),
+                                                    query,
                                                     page)
-        response = self.__post('query', encoded, aes_encrypt=True)
+        response = self.__post('query', encoded, aes_encrypt=self.encryption)
         return Serialization.deserialize_sendqueryresponse(response)
     
     def register(self, username, user, mobile_device, network_details, public_key, symmetric_key):
+        if self.encryption:
+            symmetric_key = RSA._rsa_encrypt_and_encode(self.server_public_key, symmetric_key)
         encoded = Serialization.serialize_registeruser(username, 
                                                        user, 
                                                        mobile_device, 
                                                        network_details, 
                                                        str(public_key.n),
                                                        str(public_key.e),
-                                                       RSA._rsa_encrypt_and_encode(self.server_public_key, symmetric_key))
-        response = self.__post('register', encoded, rsa_encrypt=True)
+                                                       symmetric_key)
+        response = self.__post('register', encoded, rsa_encrypt=self.encryption)
         return Serialization.deserialize_registeruserresponse(response)
     
     def getpublickey(self, username):
