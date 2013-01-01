@@ -27,7 +27,7 @@ def encryptionTest(link_obj):
     #sleep to ensure that the server is running before we execute the client
     time.sleep(2)
     print "Executing client process on %s" % client.name
-    procs[client] = server.popen(['sudo', sys.executable, '/home/mininet/minerva/src/minerva/client/client.py', str(server.IP())])
+    procs[client] = server.popen(['sudo', sys.executable, '/home/mininet/minerva/src/minerva/tests/client_tests.py', str(server.IP())])
     for h, line in pmonitor(procs, timeoutms=500):
         if h is None:
             break
@@ -57,7 +57,7 @@ def noEncryptionTest(link_obj):
     time.sleep(2)
     print "Executing client process on %s" % client.name
     procs[client] = server.popen(['sudo', sys.executable, 
-                                  '/home/mininet/minerva/src/minerva/client/client.py', 
+                                  '/home/mininet/minerva/src/minerva/tests/client_tests.py', 
                                   str(server.IP()),
                                       'False'])
     for h, line in pmonitor(procs, timeoutms=500):

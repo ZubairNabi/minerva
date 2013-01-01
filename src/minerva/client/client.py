@@ -1,12 +1,7 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + os.sep + '../..')
-import time
-
 from minerva.common.RSACrypto import generate_public_key, generate_RSA_keypair, \
 get_public_key
 from minerva.common.AESCrypto import generate_AES_key
-from minerva.common.constants import SERVER_IP, SERVER_PORT, ENCRYPTION
+from minerva.common.constants import SERVER_PORT
 from fetch_query import Fetcher
 from minerva.common.serialization import Serialization
 from minerva.common.logger import get_logger
@@ -40,29 +35,5 @@ class Client(object):
                                        self.network_details,
                                        get_public_key(self.rsa_key),
                                        self.aes_key).user_id
-        
-if __name__ == '__main__':
-    server_ip = SERVER_IP
-    encryption = ENCRYPTION
-    if len(sys.argv) == 2:
-        server_ip = sys.argv[1]
-    elif len(sys.argv) == 3:
-        server_ip = sys.argv[1]
-        encryption = False
-    logger = get_logger('client_tests')
-    client = Client(server_ip, encryption)
-    start_time = time.time()
-    client.getpublickey()
-    logger.info("getpublickey() took %f" % (time.time() - start_time))
-    start_time = time.time()
-    client.register()
-    logger.info("register() took %f" % (time.time() - start_time))
-    print "User ID: %d" % client.user_id
-    start_time = time.time()
-    print client.fetch("Islamabad", 1)
-    logger.info("fetch() took %f" % (time.time() - start_time))
-    start_time = time.time()
-    print client.fetch("Islamabad", 2)
-    logger.info("fetch() took %f" % (time.time() - start_time))
     
     
