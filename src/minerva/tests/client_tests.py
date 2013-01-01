@@ -18,7 +18,7 @@ def execute_and_time(method, logger, args=[]):
         print ret
     logger.info("%s took %f" % (method.__name__, (time.time() - start_time)))
 
-def register_and_fetch(argv):
+def register_and_fetch_log(argv):
     server_ip = SERVER_IP
     encryption = ENCRYPTION
     if len(argv) == 2:
@@ -33,6 +33,20 @@ def register_and_fetch(argv):
     print "User ID: %d" % client.user_id
     execute_and_time(client.fetch, logger, args=["Islamabad", 1])
     execute_and_time(client.fetch, logger, args=["Islamabad", 2])
+    
+def register_and_fetch(argv):
+    server_ip = SERVER_IP
+    encryption = ENCRYPTION
+    if len(argv) == 2:
+        server_ip = argv[1]
+    elif len(argv) == 3:
+        server_ip = argv[1]
+        encryption = False
+    logger = get_logger('client_tests')
+    client = Client(server_ip, encryption)
+    client.getpublickey()
+    client.register()
+    execute_and_time(client.fetch, logger, args=["Islamabad", 1])
     
 
 if __name__ == '__main__':
