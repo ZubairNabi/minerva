@@ -46,6 +46,9 @@ if __name__ == '__main__':
     encryption = ENCRYPTION
     if len(sys.argv) == 2:
         server_ip = sys.argv[1]
+    elif len(sys.argv) == 3:
+        server_ip = sys.argv[1]
+        encryption = False
     logger = get_logger('client_tests')
     client = Client(server_ip, encryption)
     start_time = time.time()

@@ -87,6 +87,9 @@ def main():
     encryption = ENCRYPTION
     if len(sys.argv) == 2:
         server_ip = sys.argv[1]
+    elif len(sys.argv) == 3:
+        server_ip = sys.argv[1]
+        encryption = False
     server = Server(server_ip, encryption)
     server.start()
 
