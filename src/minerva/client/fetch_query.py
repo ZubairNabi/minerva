@@ -5,7 +5,6 @@ import cStringIO
 import base64
 
 from minerva.common.serialization import Serialization
-from minerva.common.logger import get_logger
 import minerva.common.AESCrypto as AES
 import minerva.common.RSACrypto as RSA
 
@@ -15,14 +14,14 @@ QUERY_TYPE = {  'keyword': 'q',
 
 class Fetcher(object):
     
-    def __init__(self, ip, port, rsa_key, aes_key):
+    def __init__(self, ip, port, rsa_key, aes_key, logger):
         self.curl = pycurl.Curl()
         self.server_ip = ip
         self.server_port = port
         self.rsa_key = rsa_key
         self.aes_key = aes_key
         self.server_public_key = None
-        self.logger = get_logger('client')
+        self.logger = logger
         
     def set_server_public_key(self, server_public_key):
         self.server_public_key = server_public_key
