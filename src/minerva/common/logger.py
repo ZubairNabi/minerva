@@ -7,11 +7,9 @@ def get_logger(logger_type):
         hdlr = logging.FileHandler('server.log')
     elif logger_type == 'client':
         hdlr = logging.FileHandler('client.log')
-    elif logger_type == 'client_tests':
-        hdlr = logging.FileHandler('client_tests.log')
-        formatter = logging.Formatter('%(asctime)s %(message)s')
     else:
-        return
+        hdlr = logging.FileHandler(logger_type + '.log')
+        formatter = logging.Formatter('%(asctime)s %(message)s')
     hdlr.setFormatter(formatter)
     logger.addHandler(hdlr) 
     logger.setLevel(logging.DEBUG)

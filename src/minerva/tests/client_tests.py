@@ -21,12 +21,17 @@ def execute_and_time(method, logger, args=[]):
 def register_and_fetch_log(argv):
     server_ip = SERVER_IP
     encryption = ENCRYPTION
+    log_file = 'client_test'
     if len(argv) == 2:
         server_ip = argv[1]
     elif len(argv) == 3:
         server_ip = argv[1]
+        log_file = argv[2]
+    elif len(argv) == 4:
+        server_ip = argv[1]
+        log_file = argv[2]
         encryption = False
-    logger = get_logger('client_tests')
+    logger = get_logger(log_file)
     client = Client(server_ip, encryption)
     execute_and_time(client.getpublickey, logger)
     execute_and_time(client.register, logger)
@@ -37,12 +42,17 @@ def register_and_fetch_log(argv):
 def register_and_fetch(argv):
     server_ip = SERVER_IP
     encryption = ENCRYPTION
+    log_file = 'client_test'
     if len(argv) == 2:
         server_ip = argv[1]
     elif len(argv) == 3:
         server_ip = argv[1]
+        log_file = argv[2]
+    elif len(argv) == 4:
+        server_ip = argv[1]
+        log_file = argv[2]
         encryption = False
-    logger = get_logger('client_tests')
+    logger = get_logger(log_file)
     client = Client(server_ip, encryption)
     client.getpublickey()
     client.register()
