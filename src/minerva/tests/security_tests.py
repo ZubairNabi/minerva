@@ -1,5 +1,6 @@
 import time
 import sys
+from signal import SIGKILL
 from mininet.log import setLogLevel
 from mininet.util import dumpNodeConnections, pmonitor
 from mininet.node import CPULimitedHost
@@ -23,17 +24,18 @@ def encryptionTest(link_obj):
     client, server = net.get('h1', 's1')
     procs = {}
     print "Executing server process on %s" % server.name
-    procs[server] = server.popen(['sudo', sys.executable, '/home/mininet/minerva/src/minerva/server/server.py', str(server.IP())])
+    procs[server] = server.popen([sys.executable, '/home/mininet/minerva/src/minerva/server/server.py', str(server.IP())])
     #sleep to ensure that the server is running before we execute the client
     time.sleep(2)
     print "Executing client process on %s" % client.name
-    procs[client] = server.popen(['sudo', sys.executable, '/home/mininet/minerva/src/minerva/tests/client_tests.py', str(server.IP())])
+    procs[client] = server.popen([sys.executable, '/home/mininet/minerva/src/minerva/tests/client_tests.py', str(server.IP())])
     for h, line in pmonitor(procs, timeoutms=500):
         if h is None:
             break
     #the client is done. I keeel the server!
     print "Cleaning up"
-    procs[server].kill()
+    for p in procs.values():
+        p.send_signal(SIGKILL)
     net.stop()
     
 def noEncryptionTest(link_obj):
@@ -49,14 +51,14 @@ def noEncryptionTest(link_obj):
     client, server = net.get('h1', 's1')
     procs = {}
     print "Executing server process on %s" % server.name
-    procs[server] = server.popen(['sudo', sys.executable, 
+    procs[server] = server.popen([sys.executable, 
                                   '/home/mininet/minerva/src/minerva/server/server.py', 
                                   str(server.IP()), 
                                       'False'])
     #sleep to ensure that the server is running before we execute the client
     time.sleep(2)
     print "Executing client process on %s" % client.name
-    procs[client] = server.popen(['sudo', sys.executable, 
+    procs[client] = server.popen([sys.executable, 
                                   '/home/mininet/minerva/src/minerva/tests/client_tests.py', 
                                   str(server.IP()),
                                       'False'])
@@ -65,7 +67,8 @@ def noEncryptionTest(link_obj):
             break
     #the client is done. I keeel the server!
     print "Cleaning up"
-    procs[server].kill()
+    for p in procs.values():
+        p.send_signal(SIGKILL)
     net.stop()
 
 if __name__ == '__main__':
