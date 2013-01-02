@@ -52,6 +52,8 @@ class Handler(object):
             self.__ontology_manager.add_individual('User', register.username)
             self.__ontology_manager.save()
             self.client_id += 1  
+            self.logger.debug('Username %s registered and assigned ID %d' \
+                              % (register.username, user_id))
             if self.encryption:
                 return RSA.rsa_encrypt_client(self.clients[user_id], 
                                               Serialization.serialize_registeruserresponse(user_id))
