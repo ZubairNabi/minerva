@@ -21,19 +21,28 @@ class Client(object):
         self.network_details = Serialization.create_networkdetails(1000)
     
     def fetch(self, query, page):
-        return self.__fetcher.fetch(self.user_id, query, page)
+        try:
+            return self.__fetcher.fetch(self.user_id, query, page)
+        except Exception, err_msg:
+            self.logger.error("Error: %s" % (str(err_msg)))
     
     def getpublickey(self):
-        publickey = self.__fetcher.getpublickey(self.username).public_key
-        self.server_public_key = generate_public_key(publickey.mod, publickey.exp)
-        self.__fetcher.set_server_public_key(self.server_public_key)
+        try:
+            publickey = self.__fetcher.getpublickey(self.username).public_key
+            self.server_public_key = generate_public_key(publickey.mod, publickey.exp)
+            self.__fetcher.set_server_public_key(self.server_public_key)
+        except Exception, err_msg:
+            self.logger.error("Error: %s" % (str(err_msg)))
         
     def register(self):
-        self.user_id = self.__fetcher.register(self.username,
-                                       self.user,
-                                       self.mobile_device,
-                                       self.network_details,
-                                       get_public_key(self.rsa_key),
-                                       self.aes_key).user_id
+        try:
+            self.user_id = self.__fetcher.register(self.username,
+                                           self.user,
+                                           self.mobile_device,
+                                           self.network_details,
+                                           get_public_key(self.rsa_key),
+                                           self.aes_key).user_id
+        except Exception, err_msg:
+            self.logger.error("Error: %s" %  (str(err_msg)))
     
     
