@@ -2,6 +2,7 @@ import time
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + os.sep + '../..')
+import random
 
 
 from minerva.common.constants import SERVER_IP, ENCRYPTION
@@ -53,7 +54,7 @@ def register_and_fetch(argv):
         log_file = argv[2]
         encryption = False
     logger = get_logger(log_file)
-    client = Client(server_ip, encryption)
+    client = Client(server_ip, encryption, '%010x' % random.randrange(256**5))
     client.getpublickey()
     client.register()
     execute_and_time(client.fetch, logger, args=["Islamabad", 1])

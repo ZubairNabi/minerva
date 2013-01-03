@@ -8,14 +8,14 @@ from minerva.common.logger import get_logger
 
 class Client(object):
     
-    def __init__(self, server_ip, encryption):
+    def __init__(self, server_ip, encryption, username='zubair'):
         self.rsa_key = generate_RSA_keypair()
         self.aes_key = generate_AES_key()
         self.logger = get_logger('client')
         self.server_public_key = None
         self.user_id = None
         self.__fetcher = Fetcher(server_ip, SERVER_PORT, self.rsa_key, self.aes_key, self.logger, encryption)
-        self.username = 'zubair'
+        self.username = username
         self.user = Serialization.create_user(25, 'CS', 'MPhil', '2012')
         self.mobile_device = Serialization.create_mobiledevice('Samsung', 'Ace', True, True, 'Android', 'Gingerbread')
         self.network_details = Serialization.create_networkdetails(1000)
