@@ -62,7 +62,8 @@ def connectToInternet( network ):
     root = Node( 'root', inNamespace=False )
     intf = Link( root, switch ).intf1
     #intf = createLink( root, switch )[ 0 ]
-    root.setIP( intf, ip, prefixLen )
+    #root.setIP( intf, ip, prefixLen )
+    root.setIP( ip, prefixLen, intf)
 
     # Start network that now includes link to root namespace
     network.start()
