@@ -5,6 +5,7 @@ Example to create a Mininet topology and connect it to the internet via NAT
 through eth0 on the host.
 
 Glen Gibb, February 2011
+Edited: Zubair Nabi, January 2013
 """
 
 from mininet.cli import CLI
@@ -21,7 +22,8 @@ def startNAT( inetIntf, root ):
     root: node to access iptables from"""
 
     # Identify the interface connecting to the mininet network
-    localIntf =  root.intfs[0]
+    #localIntf =  root.intfs[0]
+    localIntf =  root.intfs[0].name
     
     # Flush any currently active rules
     root.cmd( 'iptables -F' )
@@ -74,7 +76,8 @@ def connectToInternet( network ):
     # Establish routes from end hosts
     for host in network.hosts:
         host.cmd( 'ip route flush root 0/0' )
-        host.cmd( 'route add -net 10.0.0.0/24 dev ' + host.intfs[0] )
+        #host.cmd( 'route add -net 10.0.0.0/24 dev ' + host.intfs[0] )
+        host.cmd( 'route add -net 10.0.0.0/24 dev ' + host.intfs[0].name )
         host.cmd( 'route add default gw ' + ip )
 
     print
