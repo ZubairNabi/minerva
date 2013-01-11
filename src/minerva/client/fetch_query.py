@@ -33,6 +33,7 @@ class Fetcher(object):
         buffer = cStringIO.StringIO()
         self.curl.setopt(pycurl.URL, url)
         self.curl.setopt(pycurl.WRITEFUNCTION, buffer.write)
+        self.logger.debug('URL: %s', url)
         try: 
             self.curl.perform()
             if self.curl.getinfo(pycurl.HTTP_CODE) == 200:
