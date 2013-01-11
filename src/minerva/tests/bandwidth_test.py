@@ -43,7 +43,7 @@ def bandwidthTest(link_obj, n_clients, iteration):
         log_file = link_obj.__str__() + "_" + 'bandwidth' + '_' + str(n_clients) \
         + '_iteration' + str(iteration)
         procs[client] = server.popen([sys.executable, 
-                                      '/home/mininet/minerva/src/minerva/tests/client_tests.py', 
+                                      '/home/mininet/minerva/src/minerva/tests/client_tests_binary.py', 
                                       str(server.IP()),
                                       log_file])
         

@@ -3,6 +3,8 @@
 import pycurl
 import cStringIO
 import base64
+import os
+import random
 
 from minerva.common.serialization import Serialization
 import minerva.common.AESCrypto as AES
@@ -26,6 +28,23 @@ class Fetcher(object):
         
     def set_server_public_key(self, server_public_key):
         self.server_public_key = server_public_key
+        
+    def __get_binary(self, url, output_file):
+        buffer = cStringIO.StringIO()
+        self.curl.setopt(pycurl.URL, url)
+        self.curl.setopt(pycurl.WRITEFUNCTION, buffer.write)
+        try: 
+            self.curl.perform()
+            if self.curl.getinfo(pycurl.HTTP_CODE) == 200:
+                self.logger.debug('%s: Success!' % url)
+                with open(output_file, "wb") as fp:
+                    fp.write(buffer.getvalue())
+            else:
+                self.logger.debug('%s: Failure!' % url)
+        except pycurl.error, msg: 
+            errno, text = msg 
+            self.logger.error('pycURL Error! (error number %d): %s' % (errno, text))
+            self.logger.error('pycURL HTTP status code: %d' % (self.curl.getinfo(pycurl.HTTP_CODE)))  
         
     def __post(self, method, encoded_message, rsa_encrypt=None, aes_encrypt=None):
         buf = cStringIO.StringIO()
@@ -81,6 +100,9 @@ class Fetcher(object):
         encoded = Serialization.serialize_getpublickey(username)
         response = self.__post('getpublickey', encoded)
         return Serialization.deserialize_getpublickeyresponse(response)
+    
+    def get_binary(self, url):
+        self.__get_binary(url, '%010x' % random.randrange(256**5) + os.path.basename(url))
 
     def __del__(self):
         self.curl.close()    

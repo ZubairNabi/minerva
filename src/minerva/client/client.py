@@ -19,6 +19,12 @@ class Client(object):
         self.user = Serialization.create_user(25, 'CS', 'MPhil', '2012')
         self.mobile_device = Serialization.create_mobiledevice('Samsung', 'Ace', True, True, 'Android', 'Gingerbread')
         self.network_details = Serialization.create_networkdetails(1000)
+        
+    def fetch_binary(self, url):
+        try:
+            self.__fetcher.get_binary(url)
+        except Exception, err_msg:
+            self.logger.error("Error: %s" % (str(err_msg)))
     
     def fetch(self, query, page):
         try:

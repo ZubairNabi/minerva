@@ -12,3 +12,4 @@ AES_MODE = AES.MODE_ECB
 ONTOLOGY_FILE = "minerva.owl"
 ENCRYPTION = True
 POX_DIR = '/home/mininet/pox'
+VIDEO_URL = 'http://www.mediacollege.com/downloads/video/hd/shuttle-flip.mpg'

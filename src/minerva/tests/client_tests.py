@@ -13,6 +13,8 @@ def execute_and_time(method, logger, args=[]):
     start_time = time.time()
     if len(args) == 0:
         ret = method()
+    elif len(args) == 1:
+        ret = method(args[0])
     else:
         ret = method(args[0], args[1])
     if ret:
