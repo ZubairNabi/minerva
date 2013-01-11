@@ -11,7 +11,8 @@ from mininet.cli import CLI
 from mininet.log import lg, info
 from mininet.node import Node, OVSKernelSwitch
 from mininet.topolib import TreeNet
-from mininet.util import createLink
+#from mininet.util import createLink
+from mininet.link import Link
 
 #################################
 def startNAT( inetIntf, root ):
@@ -59,7 +60,8 @@ def connectToInternet( network ):
 
     # Create a node in root namespace and link to switch 0
     root = Node( 'root', inNamespace=False )
-    intf = createLink( root, switch )[ 0 ]
+    intf = Link( root, switch ).intf1
+    #intf = createLink( root, switch )[ 0 ]
     root.setIP( intf, ip, prefixLen )
 
     # Start network that now includes link to root namespace
@@ -86,3 +88,4 @@ if __name__ == '__main__':
     lg.setLogLevel( 'info')
     net = TreeNet( depth=1, fanout=4, switch=OVSKernelSwitch )
     connectToInternet( net )
+    
