@@ -52,7 +52,7 @@ def bandwidthTest(link_obj, n_clients, iteration):
         if h is None:
             break
     #wait for the processes to get their work done
-    time.sleep(2)
+    time.sleep(100)
     #the client is done. I keeel the server!
     print "Cleaning up"
     for p in procs.values():
