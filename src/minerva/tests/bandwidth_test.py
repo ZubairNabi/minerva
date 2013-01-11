@@ -11,6 +11,7 @@ from mininet.net import Mininet
 
 
 from mininet_setup import SingleSwitchTopo, WiFiLink, Pox
+from connect_internet import connectToInternet, stopNAT
 
 
 def bandwidthTest(link_obj, n_clients, iteration):
@@ -23,7 +24,7 @@ def bandwidthTest(link_obj, n_clients, iteration):
                   link=TCLink,
                   controller=Pox)
     print "Conducting bandwidthTest between clients and server for a %s link" % link_obj
-    net.start()
+    root = connectToInternet(net)
     print "Dumping host connections"
     dumpNodeConnections(net.hosts)
     print "Conducting ze test"
@@ -56,6 +57,7 @@ def bandwidthTest(link_obj, n_clients, iteration):
     print "Cleaning up"
     for p in procs.values():
         p.send_signal(SIGKILL)
+    stopNAT(root)
     net.stop()
 
 if __name__ == '__main__':

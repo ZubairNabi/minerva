@@ -52,7 +52,7 @@ def stopNAT( root ):
     # Instruct the kernel to perform forwarding
     root.cmd( 'sysctl net.ipv4.ip_forward=0' )
 
-def connectToInternet( network ):
+def connectToInternetCli( network ):
     "Connect the network to the internet"
     switch = network.switches[ 0 ]  # switch to use
     ip = '10.0.0.254'  # our IP address on host network
@@ -87,6 +87,37 @@ def connectToInternet( network ):
 
     stopNAT( root )
     network.stop()
+    
+def connectToInternet( network ):
+    "Connect the network to the internet"
+    switch = network.switches[ 0 ]  # switch to use
+    ip = '10.0.0.254'  # our IP address on host network
+    routes = [ '10.0.0.0/24' ]  # host networks to route to
+    prefixLen = 24 # subnet mask length
+    inetIface = "eth0" # host interface for internet connectivity
+
+    # Create a node in root namespace and link to switch 0
+    root = Node( 'root', inNamespace=False )
+    intf = Link( root, switch ).intf1
+    #intf = createLink( root, switch )[ 0 ]
+    #root.setIP( intf, ip, prefixLen )
+    root.setIP( ip, prefixLen, intf)
+
+    # Start network that now includes link to root namespace
+    network.start()
+
+    # Start NAT and establish forwarding
+    startNAT( inetIface, root )
+
+    # Establish routes from end hosts
+    for host in network.hosts:
+        host.cmd( 'ip route flush root 0/0' )
+        #host.cmd( 'route add -net 10.0.0.0/24 dev ' + host.intfs[0] )
+        host.cmd( 'route add -net 10.0.0.0/24 dev ' + host.intfs[0].name )
+        host.cmd( 'route add default gw ' + ip )
+        
+    return root
+
 
 if __name__ == '__main__':
     lg.setLogLevel( 'info')
