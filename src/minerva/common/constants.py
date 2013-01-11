@@ -11,3 +11,4 @@ AES_KEYSIZE = 16
 AES_MODE = AES.MODE_ECB
 ONTOLOGY_FILE = "minerva.owl"
 ENCRYPTION = True
+POX_DIR = '/home/mininet/pox'

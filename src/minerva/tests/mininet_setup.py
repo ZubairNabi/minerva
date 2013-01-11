@@ -1,4 +1,12 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + os.sep + '../..')
+
+
 from mininet.topo import Topo
+from mininet.node import Controller
+from mininet.log import warn
+from minerva.common.constants import POX_DIR
 
 
 class Link(object):
@@ -39,4 +47,25 @@ class ClientServerTopo(SingleSwitchTopo):
     "Single switch connected to a client."
     def __init__(self, link_obj):
         super(ClientServerTopo, self).__init__(1, link_obj, .5)
+        
+class Pox(Controller):
+    "Controller to run a POX application."
+
+    def __init__(self, name, *poxArgs, **kwargs):
+        """Init.
+           name: name to give controller
+           poxArgs: arguments (strings) to pass to POX"""
+        if not poxArgs:
+            warn('warning: no POX modules specified; '
+                  'running packetdump only\n')
+            poxArgs = ['packetdump']
+        elif type(poxArgs) not in (list, tuple):
+            poxArgs = [poxArgs]
+
+        Controller.__init__(self, name,
+                             command=POX_DIR + '/pox.py',
+                             cargs='--libdir=/usr/local/lib -v -i ptcp:%s ' +
+                             ' '.join(poxArgs),
+                             cdir=POX_DIR,
+                             **kwargs)
     
